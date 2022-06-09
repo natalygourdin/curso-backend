@@ -1,0 +1,15 @@
+{
+  "name": "clase6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "desafio3.js",
+  "scripts": {
+    "start": "node ./desafio3.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
