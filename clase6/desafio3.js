@@ -140,29 +140,34 @@ for(let i = 0; i < arrProducts.length; i++){
 
 //EXPRESS
 
-const express = require('express')
-const app = express()
-const puerto = 8080
+const express = require('express');
+const app = express();
+const puerto = 8080;
 
-let todos = []
-app.use((req,res,next)=>{
-    productos.getAll().then((r)=>(todos=r))
-    next()
-})
-app.get('/productos', (req,res)=>{
-    res.json(todos)
-})
-
-app.get('/productoRandom', (req,res)=>{
-    const numeroAleatorio =  Math.floor((Math.random() * (todos.length - 0 + 1)) + 0);
-    res.json(todos[numeroAleatorio])
-
-})
-
-
-app.listen(puerto,(error)=>{
-    if (error){
-        return console.log(`el servidor tiene un error ${error}`)
+app.get('/productos', async(req, res) => {
+    const allProducts = await productos.getAll();
+    if(allProducts.length === 0){
+        res.send('No se encontraron productos');
+    }else{
+        res.send(allProducts);
     }
-    console.log(`el servidor se inicio en el puertoo ${puerto}`)
+})
+
+app.get('/productosRandom', async(req, res) => {
+    const prodRandom = await productos.getAll();
+    if(prodRandom.length === 0){
+        res.send('No se encontraron productos');
+    }else{
+        const random = Math.floor(Math.random() * prodRandom.length);
+        res.send(prodRandom[random]);
+    }
+})
+
+
+app.listen(puerto, error => {
+    if (error) {
+        console.log(`Error en el servidor : ${error}`)
+    } else {
+        console.log(`Servidor iniciado en el puerto: ${puerto}`)
+    }
 })
